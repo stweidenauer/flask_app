@@ -1,0 +1,17 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <a href="{{url_for('static', filename='2020-10-20/' + '2020-10-20_07_12_35.285.jpg')}}">
+                <img src="{{url_for('static', filename='2020-10-20/' + '2020-10-20_07_12_35.285.jpg')}}" alt="Lights"
+                     style="width:100%">
+                <div class="caption">
+                    <p>Lorem ipsum...</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
