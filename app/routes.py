@@ -18,7 +18,7 @@ def about():
 def camera():
     # pic_directory = os.path.join(app.root_path, 'static')
     # all directories with current dates = [r for r in os.listdir(pic_directory) if r.startswith('20')]
-    # Idee Dictonary mit Date als schlüssel und eine liste der Bilder als data
+    # Idee Dictonary mit Date als schlüssel und eine liste der Bilder als value
     # for item in directory with current dates:
     #     dicy[item] = os.listdir(os.path.join(item))
     pic_directory = os.path.join(app.root_path, 'static')
