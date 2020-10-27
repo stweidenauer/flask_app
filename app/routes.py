@@ -1,5 +1,7 @@
 import os
+
 from flask import render_template
+
 from app import app
 
 
@@ -16,13 +18,15 @@ def about():
 
 @app.route('/camera')
 def camera():
-    # pic_directory = os.path.join(app.root_path, 'static')
-    # all directories with current dates = [r for r in os.listdir(pic_directory) if r.startswith('20')]
-    # Idee Dictonary mit Date als schlüssel und eine liste der Bilder als value
-    # for item in directory with current dates:
-    #     dicy[item] = os.listdir(os.path.join(item))
-    pic_directory = os.path.join(app.root_path, 'static')
-    pic_names = os.listdir(pic_directory)
-    pic_names.sort()
-    print(pic_names)
-    return render_template('camera.html', pic_names=pic_names)
+    # where the folders with the pictures live
+    pic_folders = os.path.join(app.root_path, 'static')
+    # all directories with current dates
+    directories_current_dates = [r for r in os.listdir(pic_folders) if r.startswith('20')]
+    # build dictionary with date as key and pictures as values
+    pic_dic = {}
+    for item in directories_current_dates:
+        pic_dic[item] = os.listdir(os.path.join(pic_folders, item))
+
+    print(pic_dic)
+
+    return render_template('camera.html', pic_dic=pic_dic)
