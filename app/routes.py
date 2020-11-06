@@ -16,8 +16,7 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/camera')
-def camera():
+def make_dic_pic():
     # where the folders with the pictures live
     pic_folders = os.path.join(app.root_path, 'static')
     # all directories with current dates
@@ -26,7 +25,12 @@ def camera():
     pic_dic = {}
     for item in directories_current_dates:
         pic_dic[item] = os.listdir(os.path.join(pic_folders, item))
+        pic_dic[item].sort()
+    return pic_dic
 
-    print(pic_dic)
 
-    return render_template('camera.html', pic_dic=pic_dic)
+@app.route('/camera')
+def camera():
+    pic_dic = make_dic_pic()
+    sor_key_list = sorted(pic_dic)
+    return render_template('camera.html', pic_dic=pic_dic, sor_key_list=sor_key_list)
