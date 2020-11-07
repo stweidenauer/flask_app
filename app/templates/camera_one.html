@@ -1,0 +1,22 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+<div class="caption">
+    <H1> {{date_key}} </H1>
+</div>
+<div class="row">
+    {% for file in pic_dic[date_key] %}
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <a href="{{url_for('static', filename=date_key + '/' + file)}}">
+                <img src="{{url_for('static', filename=date_key + '/' +file)}}" alt="Lights"
+                     style="width:100%">
+                <div class="caption">
+                    <p>Time: {{ file[11:13] }}:{{ file[14:16] }}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

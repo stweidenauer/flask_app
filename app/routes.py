@@ -34,3 +34,9 @@ def camera():
     pic_dic = make_dic_pic()
     sor_key_list = sorted(pic_dic)
     return render_template('camera.html', pic_dic=pic_dic, sor_key_list=sor_key_list)
+
+
+@app.route('/camera/<date_key>')
+def camera_oneday(date_key):
+    pic_dic = make_dic_pic()
+    return render_template('camera_one.html', pic_dic=pic_dic, date_key=date_key)

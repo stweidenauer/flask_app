@@ -1,10 +1,13 @@
 {% extends "base_layout.html" %}
 
 {% block content %}
+
 {% for key in sor_key_list%}
-<div class="caption">
-    <H1> {{key}} </H1>
-</div>
+<a href="{{url_for('camera_oneday', date_key=key)}}">
+    <div class="caption">
+        <H1> {{key}} </H1>
+    </div>
+</a>
 <div class="row">
     {% for file in pic_dic[key][:6] %}
     <div class="col-md-4">
@@ -21,5 +24,4 @@
     {% endfor %}
 </div>
 {% endfor %}
-
 {% endblock %}
