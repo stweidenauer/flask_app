@@ -3,8 +3,7 @@ from flask import render_template, flash, url_for, redirect
 from app import app, db, bcrypt
 from app.forms import LoginForm, RegisterForm
 from app.models import User
-from flask_login import login_user
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import login_user, login_required, current_user, logout_user
 
 
 @app.route('/')
@@ -29,6 +28,12 @@ def login():
         else:
             flash('Login Unsuccessful. Please check Data!')
     return render_template('login.html', form=form)
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -58,6 +63,7 @@ def make_dic_pic():
 
 
 @app.route('/camera')
+@login_required
 def camera():
     pic_dic = make_dic_pic()
     sor_key_list = sorted(pic_dic)
