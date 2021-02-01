@@ -2,7 +2,21 @@
 {% import "bootstrap/wtf.html" as wtf%}
 
 {% block content %}
-{% for word in words%}
-{{word}}
-{% endfor %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Englisch</th>
+        <th scope="col">German</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for pair in (word_list) %}
+    <tr>
+        <td>{{pair[0]}}</td>
+        <td>{{pair[1]}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

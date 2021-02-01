@@ -89,5 +89,10 @@ def dictionary():
 
 @app.route('/allwords', methods=['GET', 'POST'])
 def allwords():
-    words = Dictionary.query.all()
-    return render_template('allwords.html', words=words)
+    number_words = Dictionary.query.count()
+    word_list = []
+    for i in range(1, number_words+1):
+        pair = Dictionary.query.filter_by(id=i).first()
+        word_list.append((pair.engl, pair.german))
+
+    return render_template('allwords.html', word_list=word_list)

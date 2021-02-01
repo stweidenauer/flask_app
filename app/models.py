@@ -1,5 +1,4 @@
 from flask_login import UserMixin
-
 from app import db, login_manager
 
 
@@ -24,4 +23,4 @@ class Dictionary(db.Model):
     german = db.Column(db.String(120), unique=True, nullable=False)
 
     def __repr__(self):
-        return f"User('{self.engl}', '{self.german}')"
+        return f"Dictionary('{self.engl}', '{self.german}')"
