@@ -30,3 +30,10 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('That email is taken. Please chose another one!')
+
+
+class DictionaryForm(FlaskForm):
+    engl = StringField('Englisch',
+                        validators=[DataRequired()])
+    german = StringField('Deutsch', validators=[DataRequired()])
+    submit = SubmitField('Save')

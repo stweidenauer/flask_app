@@ -1,0 +1,8 @@
+{% extends "base_layout.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+
+{% block content %}
+{% for word in words%}
+{{word}}
+{% endfor %}
+{% endblock %}

@@ -1,5 +1,6 @@
-from app import db, login_manager
 from flask_login import UserMixin
+
+from app import db, login_manager
 
 
 @login_manager.user_loader
@@ -15,3 +16,12 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
+
+
+class Dictionary(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    engl = db.Column(db.String(120), unique=True, nullable=False)
+    german = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"User('{self.engl}', '{self.german}')"

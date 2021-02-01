@@ -1,9 +1,9 @@
 import os
 from flask import render_template, flash, url_for, redirect
+from flask_login import login_user, login_required, logout_user
 from app import app, db, bcrypt
-from app.forms import LoginForm, RegisterForm
-from app.models import User
-from flask_login import login_user, login_required, current_user, logout_user
+from app.forms import LoginForm, RegisterForm, DictionaryForm
+from app.models import User, Dictionary
 
 
 @app.route('/')
@@ -74,3 +74,20 @@ def camera():
 def camera_oneday(date_key):
     pic_dic = make_dic_pic()
     return render_template('camera_one.html', pic_dic=pic_dic, date_key=date_key)
+
+
+@app.route('/dictionary', methods=['GET', 'POST'])
+def dictionary():
+    form = DictionaryForm()
+    if form.validate_on_submit():
+        entry = Dictionary(engl=form.engl.data, german=form.german.data)
+        db.session.add(entry)
+        db.session.commit()
+        flash(f'Your Words are stored', 'success')
+    return render_template('dictionary.html', form=form)
+
+
+@app.route('/allwords', methods=['GET', 'POST'])
+def allwords():
+    words = Dictionary.query.all()
+    return render_template('allwords.html', words=words)
