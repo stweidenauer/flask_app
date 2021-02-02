@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User
+from app.models import User, Dictionary
 
 
 class LoginForm(FlaskForm):
@@ -34,6 +34,12 @@ class RegisterForm(FlaskForm):
 
 class DictionaryForm(FlaskForm):
     engl = StringField('Englisch',
-                        validators=[DataRequired()])
+                       validators=[DataRequired()])
     german = StringField('Deutsch', validators=[DataRequired()])
     submit = SubmitField('Save')
+    submit2 = SubmitField('All Words')
+
+    def validate_engl(self, engl):
+        engl = Dictionary.query.filter_by(engl=engl.data).first()
+        if engl:
+            ValidationError('Word already exists. Check AllWords')

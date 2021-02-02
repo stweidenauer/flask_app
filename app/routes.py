@@ -80,10 +80,13 @@ def camera_oneday(date_key):
 def dictionary():
     form = DictionaryForm()
     if form.validate_on_submit():
-        entry = Dictionary(engl=form.engl.data, german=form.german.data)
-        db.session.add(entry)
-        db.session.commit()
-        flash(f'Your Words are stored', 'success')
+        if form.submit.data:
+            entry = Dictionary(engl=form.engl.data, german=form.german.data)
+            db.session.add(entry)
+            db.session.commit()
+            flash(f'Your Words are stored', 'success')
+        else:
+            return redirect(url_for('allwords'))
     return render_template('dictionary.html', form=form)
 
 
