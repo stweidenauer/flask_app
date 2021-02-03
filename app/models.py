@@ -24,7 +24,7 @@ class Dictionary(db.Model):
     german = db.Column(db.String(120), unique=True, nullable=False)
 
     def __repr__(self):
-        return f"Dictionary('{self.id}, {self.engl}', '{self.german}')"
+        return f"{self.engl} {self.german}"
 
 
 

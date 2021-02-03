@@ -93,14 +93,8 @@ def dictionary():
 
 @app.route('/allwords', methods=['GET', 'POST'])
 def allwords():
-    number_words = Dictionary.query.count()
-    word_list = []
-    for i in range(1, number_words + 1):
-        pair = Dictionary.query.filter_by(id=i).first()
-        if pair:
-            word_list.append((pair.engl, pair.german))
-
-    return render_template('allwords.html', word_list=word_list)
+    content = Dictionary.query.all()
+    return render_template('allwords.html', word_list=content)
 
 
 @app.route('/delete_word/<string:word>')
