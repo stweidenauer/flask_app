@@ -37,9 +37,8 @@ class DictionaryForm(FlaskForm):
                        validators=[DataRequired()])
     german = StringField('Deutsch', validators=[DataRequired()])
     submit = SubmitField('Save')
-    submit2 = SubmitField('All Words')
 
     def validate_engl(self, engl):
-        engl = Dictionary.query.filter_by(engl=engl.data).first()
-        if engl:
-            ValidationError('Word already exists. Check AllWords')
+        word = Dictionary.query.filter_by(engl=engl.data).first()
+        if word:
+            raise ValidationError('Word already exists. Check AllWords')

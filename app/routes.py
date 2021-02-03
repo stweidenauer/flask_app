@@ -1,6 +1,8 @@
 import os
+
 from flask import render_template, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
+
 from app import app, db, bcrypt
 from app.forms import LoginForm, RegisterForm, DictionaryForm
 from app.models import User, Dictionary
@@ -80,13 +82,12 @@ def camera_oneday(date_key):
 def dictionary():
     form = DictionaryForm()
     if form.validate_on_submit():
-        if form.submit.data:
-            entry = Dictionary(engl=form.engl.data, german=form.german.data)
-            db.session.add(entry)
-            db.session.commit()
-            flash(f'Your Words are stored', 'success')
-        else:
-            return redirect(url_for('allwords'))
+        entry = Dictionary(engl=form.engl.data, german=form.german.data)
+        db.session.add(entry)
+        db.session.commit()
+        form.engl.data = " "
+        form.german.data = " "
+        flash(f'Your Words are stored', 'success')
     return render_template('dictionary.html', form=form)
 
 
@@ -94,8 +95,17 @@ def dictionary():
 def allwords():
     number_words = Dictionary.query.count()
     word_list = []
-    for i in range(1, number_words+1):
+    for i in range(1, number_words + 1):
         pair = Dictionary.query.filter_by(id=i).first()
-        word_list.append((pair.engl, pair.german))
+        if pair:
+            word_list.append((pair.engl, pair.german))
 
     return render_template('allwords.html', word_list=word_list)
+
+
+@app.route('/delete_word/<string:word>')
+def delete_word(word):
+    entry = Dictionary.query.filter_by(engl=word).first()
+    db.session.delete(entry)
+    db.session.commit()
+    return redirect(url_for('allwords'))
