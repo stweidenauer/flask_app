@@ -94,7 +94,7 @@ def dictionary():
 @app.route('/allwords', methods=['GET', 'POST'])
 def allwords():
     content = Dictionary.query.all()
-    return render_template('allwords.html', word_list=content)
+    return render_template('allwords.html', content=content)
 
 
 @app.route('/delete_word/<string:word>')
