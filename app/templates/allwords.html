@@ -16,6 +16,7 @@
         <td>{{word.engl}}</td>
         <td>{{word.german}}</td>
         <td><a href="{{url_for('delete_word', word=word.engl)}}">löschen</a></td>
+        <td> <a href="{{ 'https://dict.leo.org/englisch-deutsch/' + word.engl }}">more Information</a></td>
     </tr>
     {% endfor %}
     </tbody>
