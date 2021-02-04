@@ -3,5 +3,8 @@
 
 {% block content %}
 {{ wtf.quick_form(form) }}
-<a href="{{url_for('allwords')}}">Alle Wörter</a>
+<ul class="list-inline">
+  <li class="list-inline-item"><a href="{{url_for('allwords')}}">Alle Wörter</a></li>
+  <li class="list-inline-item"><a href="{{url_for('voc_test')}}">Vokabeltest</a></li>
+</ul>
 {% endblock %}

@@ -1,10 +1,8 @@
-import os
-
+import os, random
 from flask import render_template, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
-
 from app import app, db, bcrypt
-from app.forms import LoginForm, RegisterForm, DictionaryForm
+from app.forms import LoginForm, RegisterForm, DictionaryForm, VocTestForm
 from app.models import User, Dictionary
 
 
@@ -93,7 +91,7 @@ def dictionary():
 
 @app.route('/allwords', methods=['GET', 'POST'])
 def allwords():
-    content = Dictionary.query.all()
+    content = Dictionary.query.order_by(Dictionary.engl.desc())  # desc
     return render_template('allwords.html', content=content)
 
 
@@ -103,3 +101,18 @@ def delete_word(word):
     db.session.delete(entry)
     db.session.commit()
     return redirect(url_for('allwords'))
+
+
+@app.route('/voc_test', methods=['GET', 'POST'])
+def voc_test():
+    form = VocTestForm()
+    content = Dictionary.query.all()
+    check_word = random.choice(content)
+    if form.validate_on_submit():
+        if str(form.german.data) == str(check_word.german):
+            flash(f'Correct', 'success')
+            return redirect(url_for('voc_test'))
+        else:
+            flash(f'wrong', 'danger')
+            form.german = " "
+    return render_template('voc_test.html', form=form, check_word=check_word)

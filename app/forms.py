@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from app.models import User, Dictionary
 
 
-
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
@@ -43,3 +42,9 @@ class DictionaryForm(FlaskForm):
         word = Dictionary.query.filter_by(engl=engl.data).first()
         if word:
             raise ValidationError('Word already exists. Check AllWords')
+
+
+class VocTestForm(FlaskForm):
+    german = StringField('Deutsch', validators=[DataRequired()])
+    submit = SubmitField('Check')
+
