@@ -110,13 +110,11 @@ def voc_test():
     check_word = random.choice(content)
     print(F'Page Load Random word prior v_o_s: {check_word.german}')
     if form.validate_on_submit():
-        print("V_O_S pressed..")
-        print("V_O_S pressed..chek_word", check_word.german)
-        if form.german.data == check_word.german:
-            flash(f'Correct', 'success')
-            return redirect(url_for('voc_test'))
-        else:
-            flash(f'wrong', 'danger')
-            form.german = " "
-            return render_template('voc_test.html', form=form, check_word=check_word)
+        my_list = [check_word.german, form.german.data]
+        return redirect(url_for('answer', word=my_list))
     return render_template('voc_test.html', form=form, check_word=check_word)
+
+
+@app.route('/answer/<string:word>', methods=['GET', 'POST'])
+def answer(word):
+    return render_template('answer.html', word=word)
