@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}')"
 
 
-class Dictionary(db.Model):
+class WordBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     engl = db.Column(db.String(120), unique=True, nullable=False)
     german = db.Column(db.String(120), unique=True, nullable=False)

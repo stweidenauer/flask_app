@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User, Dictionary
+from app.models import User, WordBook
 
 
 class LoginForm(FlaskForm):
@@ -32,15 +32,15 @@ class RegisterForm(FlaskForm):
             raise ValidationError('That email is taken. Please chose another one!')
 
 
-class DictionaryForm(FlaskForm):
+class WordBookForm(FlaskForm):
     engl = StringField('Englisch',
                        validators=[DataRequired()])
     german = StringField('Deutsch', validators=[DataRequired()])
     submit = SubmitField('Save')
 
     def validate_engl(self, engl):
-        word = Dictionary.query.filter_by(engl=engl.data).first()
-        if word:
+        engl = WordBook.query.filter_by(engl=engl.data).first()
+        if engl:
             raise ValidationError('Word already exists. Check AllWords')
 
 

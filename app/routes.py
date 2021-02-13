@@ -2,8 +2,8 @@ import os, random
 from flask import render_template, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
 from app import app, db, bcrypt
-from app.forms import LoginForm, RegisterForm, DictionaryForm, VocTestForm
-from app.models import User, Dictionary
+from app.forms import LoginForm, RegisterForm, WordBookForm, VocTestForm
+from app.models import User, WordBook
 
 
 @app.route('/')
@@ -76,28 +76,28 @@ def camera_oneday(date_key):
     return render_template('camera_one.html', pic_dic=pic_dic, date_key=date_key)
 
 
-@app.route('/dictionary', methods=['GET', 'POST'])
-def dictionary():
-    form = DictionaryForm()
+@app.route('/wordbook', methods=['GET', 'POST'])
+def wordbook():
+    form = WordBookForm()
     if form.validate_on_submit():
-        entry = Dictionary(engl=form.engl.data, german=form.german.data)
+        entry = WordBook(engl=form.engl.data, german=form.german.data)
         db.session.add(entry)
         db.session.commit()
         form.engl.data = " "
         form.german.data = " "
         flash(f'Your Words are stored', 'success')
-    return render_template('dictionary.html', form=form)
+    return render_template('wordbook.html', form=form)
 
 
 @app.route('/allwords', methods=['GET', 'POST'])
 def allwords():
-    content = Dictionary.query.order_by(Dictionary.engl.desc())  # desc
+    content = WordBook.query.order_by(WordBook.engl.desc())  # desc
     return render_template('allwords.html', content=content)
 
 
 @app.route('/delete_word/<string:word>')
 def delete_word(word):
-    entry = Dictionary.query.filter_by(engl=word).first()
+    entry = WordBook.query.filter_by(engl=word).first()
     db.session.delete(entry)
     db.session.commit()
     return redirect(url_for('allwords'))
@@ -106,7 +106,7 @@ def delete_word(word):
 @app.route('/voc_test', methods=['GET', 'POST'])
 def voc_test():
     form = VocTestForm()
-    content = Dictionary.query.all()
+    content = WordBook.query.all()
     check_word = random.choice(content)
     print(F'Page Load Random word prior v_o_s: {check_word.german}')
     if form.validate_on_submit():
