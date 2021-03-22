@@ -105,14 +105,28 @@ def delete_word(word):
 
 @app.route('/voc_test', methods=['GET', 'POST'])
 def voc_test():
-    form = VocTestForm()
     content = WordBook.query.all()
     check_word = random.choice(content)
-    print(F'Page Load Random word prior v_o_s: {check_word.german}')
+    word_id = check_word.id
+    print(id)
+    return redirect(url_for("voc_test_2", word_id=word_id))
+
+
+@app.route('/voc_test_2/int:<word_id>', methods=['GET', 'POST'])
+def voc_test_2(word_id):
+    form = VocTestForm()
+    test_word = WordBook.query.filter_by(id=word_id).first()
+    print(test_word.german)
     if form.validate_on_submit():
-        my_list = [check_word.german, form.german.data]
-        return redirect(url_for('answer', word=my_list))
-    return render_template('voc_test.html', form=form, check_word=check_word)
+        print(F"Testword deutsch = {test_word.german}")
+        print(F"Testword english = {test_word.engl}")
+        print(F"Data = {form.data}")
+        print(test_word.german == form.data)
+        if form.german.data == str(test_word.german):
+            return redirect(url_for('answer', word="Correct"))
+        else:
+            return redirect(url_for('answer', word="Wrong"))
+    return render_template('voc_test_2.html', form=form, test_word=test_word)
 
 
 @app.route('/answer/<string:word>', methods=['GET', 'POST'])

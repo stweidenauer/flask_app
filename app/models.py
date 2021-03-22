@@ -1,6 +1,6 @@
 from flask_login import UserMixin
-from app import db, login_manager
 
+from app import db, login_manager
 
 
 @login_manager.user_loader
@@ -25,6 +25,3 @@ class WordBook(db.Model):
 
     def __repr__(self):
         return f"{self.engl} {self.german}"
-
-
-

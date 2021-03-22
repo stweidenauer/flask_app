@@ -3,4 +3,8 @@
 
 {% block content %}
 <h1>{{word}}</h1>
+<ul class="list-inline">
+  <li class="list-inline-item"><a href="{{url_for('allwords')}}">Alle Wörter</a></li>
+  <li class="list-inline-item"><a href="{{url_for('voc_test')}}">Nächstes Wort</a></li>
+</ul>
 {% endblock %}
