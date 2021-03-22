@@ -4,12 +4,14 @@ from flask_login import login_user, login_required, logout_user
 from app import app, db, bcrypt
 from app.forms import LoginForm, RegisterForm, WordBookForm, VocTestForm
 from app.models import User, WordBook
+from app.utilities import rki_data
 
 
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template('index.html')
+    data_list = [rki_data.get_update(), rki_data.get_deaths(), rki_data.get_incident()]
+    return render_template('index.html', data_list=data_list)
 
 
 @app.route('/about')
