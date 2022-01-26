@@ -134,3 +134,5 @@ def voc_test_2(word_id):
 @app.route('/answer/<string:word>', methods=['GET', 'POST'])
 def answer(word):
     return render_template('answer.html', word=word)
+
+
